@@ -1,11 +1,11 @@
 import { Exclude } from 'class-transformer';
 
-export class UserResponse {
+export class CategoryResponse {
   id: number;
 
   name: string;
 
-  constructor(partial: Partial<UserResponse>) {
+  constructor(partial: Partial<CategoryResponse>) {
     Object.assign(this, partial);
   }
 }

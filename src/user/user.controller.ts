@@ -16,12 +16,12 @@ import { UserResponse } from './user.response';
   path: 'users',
   version: '1',
 })
+@UseInterceptors(ClassSerializerInterceptor)
 export class UserController {
   constructor(private userService: UserService) {}
 
   @Get('')
   @HttpCode(200)
-  @UseInterceptors(ClassSerializerInterceptor)
   async getUsers() {
     const users: User[] = await this.userService.getUsers();
 

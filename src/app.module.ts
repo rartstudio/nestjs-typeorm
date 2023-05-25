@@ -4,6 +4,9 @@ import * as Joi from 'joi';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { APP_INTERCEPTOR } from '@nestjs/core';
+import { PostModule } from './post/post.module';
+import { CategoryModule } from './category/category.module';
+import { UserPostModule } from './user-post/user-post.module';
 
 @Module({
   imports: [
@@ -28,6 +31,7 @@ import { APP_INTERCEPTOR } from '@nestjs/core';
       useFactory: (configService: ConfigService) => ({
         type: 'postgres',
         logging: true,
+        useUTC: true,
         replication: {
           master: {
             host: configService.get('DATABASE_MASTER_HOST'),
@@ -53,10 +57,15 @@ import { APP_INTERCEPTOR } from '@nestjs/core';
       inject: [ConfigService],
     }),
     UserModule,
+    PostModule,
+    CategoryModule,
+    UserPostModule,
   ],
-  providers: [{
-    useClass: ClassSerializerInterceptor,
-    provide: APP_INTERCEPTOR,
-  }]
+  providers: [
+    {
+      useClass: ClassSerializerInterceptor,
+      provide: APP_INTERCEPTOR,
+    },
+  ],
 })
 export class AppModule {}
